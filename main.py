@@ -586,6 +586,24 @@ async def startup_event():
     if not mt5_manager.connect():
         logger.warning("MT5 connection failed - running in fallback mode")
 
+@app.get("/")
+async def root():
+    """Root endpoint with service info"""
+    return {
+        "service": "Forex Trading Automation Stack",
+        "version": "1.0.0",
+        "status": "running",
+        "endpoints": {
+            "health": "/health",
+            "generate_signal": "/generate",
+            "batch_generate": "/batch_generate", 
+            "execute_order": "/order",
+            "webhooks": ["/webhook/signal", "/webhook/approval"]
+        },
+        "docs": "/docs",
+        "timestamp": datetime.now(timezone.utc).isoformat()
+    }
+
 @app.get("/health")
 async def health_check():
     """Health check endpoint for N8N monitoring"""
