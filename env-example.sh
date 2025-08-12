@@ -1,0 +1,34 @@
+# Trading Configuration
+PAPER_MODE=true
+MANUAL_APPROVAL=true
+MT5_REST_API_KEY=your_secret_api_key_here
+
+# Risk Management
+RISK_PCT_DEFAULT=2.0
+MAX_DAILY_RISK_PCT=10.0
+MAX_OPEN_POSITIONS=5
+
+# Strategy Toggles
+ENABLE_SOROS=true
+ENABLE_JONES=true
+ENABLE_SIMONS=true
+ENABLE_DRUCKENMILLER=true
+ENABLE_BURRY=true
+
+# MetaTrader 5 Connection
+MT5_LOGIN=your_mt5_account
+MT5_PASSWORD=your_mt5_password
+MT5_SERVER=your_mt5_server
+MT5_PATH=C:\Program Files\MetaTrader 5\terminal64.exe
+
+# Database (PostgreSQL on Render)
+DATABASE_URL=postgresql://user:password@host:port/database
+
+# N8N Webhook URLs (set these in your N8N workflow)
+N8N_WEBHOOK_APPROVAL=https://your-n8n-instance.onrender.com/webhook/approval
+N8N_WEBHOOK_SIGNAL=https://your-n8n-instance.onrender.com/webhook/signal
+
+# Notifications
+SLACK_WEBHOOK_URL=https://hooks.slack.com/services/your/slack/webhook
+TELEGRAM_BOT_TOKEN=your_telegram_bot_token
+TELEGRAM_CHAT_ID=your_chat_id

@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  trading-service:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - PAPER_MODE=${PAPER_MODE:-true}
+      - MANUAL_APPROVAL=${MANUAL_APPROVAL:-true}
+      - MT5_REST_API_KEY=${MT5_REST_API_KEY}
+      - RISK_PCT_DEFAULT=${RISK_PCT_DEFAULT:-2.0}
+      - MAX_DAILY_RISK_PCT=${MAX_DAILY_RISK_PCT:-10.0}
+      - MAX_OPEN_POSITIONS=${MAX_OPEN_POSITIONS:-5}
+      - DATABASE_URL=${DATABASE_URL}
+      - SLACK_WEBHOOK_URL=${SLACK_WEBHOOK_URL}
+      - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
+      - TELEGRAM_CHAT_ID=${TELEGRAM_CHAT_ID}
+      - N8N_WEBHOOK_APPROVAL=${N8N_WEBHOOK_APPROVAL}
+      - N8N_WEBHOOK_SIGNAL=${N8N_WEBHOOK_SIGNAL}
+    depends_on:
+      - postgres
+    volumes:
+      - ./logs:/app/logs
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  postgres:
+    image: postgres:15-alpine
+    environment:
+      - POSTGRES_DB=trading_db
+      - POSTGRES_USER=trading_user
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-secure_password}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
