@@ -2953,7 +2953,7 @@ async def webhook_approval_handler(data: dict):
     logger.info(f"Received approval webhook: {data}")
     return {"status": "approved", "timestamp": datetime.now(timezone.utc).isoformat()}
 
-# Production deployment configuration
+# Change this line in the main file if needed:
 if __name__ == "__main__":
     import uvicorn
     
@@ -2961,9 +2961,6 @@ if __name__ == "__main__":
     port = int(os.getenv("PORT", 8000))
     
     logger.info(f"🚀 Starting Production Forex Trading Stack on port {port}")
-    logger.info(f"📊 Paper Mode: {PAPER_MODE}")
-    logger.info(f"✅ Manual Approval: {MANUAL_APPROVAL}")
-    logger.info(f"🔑 API Key configured: {bool(MT5_API_KEY)}")
     
     uvicorn.run(
         app, 
