@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: forex-production-stack
+    runtime: python3
+    buildCommand: pip install -r requirements.txt
+    startCommand: python main.py  # Update to your file name
+    plan: starter
+    env:
+      - key: PAPER_MODE
+        value: "true"
+      - key: MANUAL_APPROVAL
+        value: "false"
+      - key: MT5_REST_API_KEY
+        value: "forex_prod_2025_secure_key"
+      - key: RISK_PCT_DEFAULT
+        value: "2.0"
+    healthCheckPath: /health
+    autoDeploy: true
